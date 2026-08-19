@@ -1,287 +1,365 @@
 # Intellectus — GDPR Self-Audit
 
-## Assessment approach
+## Scope and method
 
-This assessment covers the Intellectus Project 3 MVP and its intended evolution toward real client use.
+This self-audit assesses the agreed Intellectus scenario: a Spanish social-impact organisation provides information about its operations, a description of its challenge and internal documents. The information passes through the Intellectus web application, n8n, research services and potentially an external AI provider. The diagnostic must be reviewed by a consultant before it is used with the client.
 
-Three labels are used throughout:
+Three labels are used throughout the assessment:
 
-- **Observed** — supported by the current implementation or project documentation.
-- **Prospective** — would arise if real internal client data is enabled.
-- **TBD** — cannot be established from the current project and requires legal, contractual or vendor confirmation.
+- **Observed / stated** — explicitly included in the agreed scenario or project design.
+- **Prospective** — relevant to production use with real personal data but not evidenced as implemented.
+- **TBD** — insufficient evidence; technical, contractual or legal confirmation is required.
 
-An undocumented control is not counted as a control that exists.
+Working rule: a control that is not documented is not counted as a control that exists.
 
----
+## Evidence vs assumptions
+
+| Element | Status | Treatment in this audit |
+|---|---|---|
+| Client is a Spanish social-impact organisation | Observed / stated | Treated as a scenario fact |
+| Web application → n8n → research services | Observed / stated | Treated as the base workflow |
+| Internal documents may contain employee, volunteer, donor or beneficiary data | Observed / stated | Treated as a genuine scenario risk |
+| Consultant review before client use | Observed / stated | Design safeguard; operational effectiveness TBD |
+| External AI provider | Possible, not confirmed | TBD; no provider or contract assumed |
+| Hosting and processing region | Not evidenced | TBD |
+| DPAs with providers | Not evidenced | TBD |
+| SCCs, adequacy or other transfer mechanism | Not evidenced | TBD |
+| Retention and deletion periods | Not evidenced | TBD |
+| Processing scale | Not evidenced | TBD |
+| Actual presence of Article 9 data | Not evidenced | TBD; treated as an input risk |
+| Operational data-subject-rights workflow | Not evidenced | TBD |
 
 # Phase 1 — Personal Data Inventory
 
-| Data category | Source | Purpose | Retention period | Crosses EU border? |
+| Data category | Source | Specific purpose | Retention | Leaves the EEA? |
 |---|---|---|---|---|
-| Organisation and challenge context | Web intake / consultant | Frame the diagnostic | Not defined for production | TBD |
-| Public professional information about identifiable people | Public web sources | Understand organisational context | Not defined for production | TBD |
-| Public statements attributed to identifiable people | Public web sources | Evidence gathering | Not defined for production | TBD |
-| Consultant-entered free text | Web intake | Context and diagnostic analysis | Not defined for production | TBD |
-| Controlled fictional/sample records | Fixtures and demo data | Testing and demonstration | Repository/test lifecycle | No personal-data issue where genuinely fictional |
-| Employee information | Future client documents | Organisational analysis where necessary | TBD before activation | TBD |
-| Volunteer information | Future client documents | Organisational analysis where necessary | TBD before activation | TBD |
-| Donor information | Future client documents | Organisational analysis where necessary | TBD before activation | TBD |
-| Beneficiary information | Future client documents | Organisational analysis where necessary | TBD before activation | TBD |
-| Potential Article 9 data | Future internal documents | Not required by default; may appear incidentally | Exclude/minimise unless specifically justified | TBD |
-| Inferences about identifiable people | Derived from input evidence | Diagnostic support where necessary | Must follow underlying purpose and retention rules | TBD |
+| Employee/volunteer names, roles and professional data, if present | Internal documents | Understand responsibilities, processes and organisational context where necessary | **TBD — define by purpose** | **TBD — depends on hosting/providers** |
+| Performance, incident, opinion or employment/volunteering-related text, if present | Internal documents | Analyse causes and evidence behind the organisational challenge | **TBD** | **TBD** |
+| Donor data, if present | Internal documents | Analyse fundraising, donor-management or resilience issues only where relevant | **TBD** | **TBD** |
+| Beneficiary data, if present | Internal documents | Analyse service delivery or impact only where necessary | **TBD** | **TBD** |
+| Professional information about identifiable people | Research services / public sources | Add context and verify external evidence | **TBD** | **TBD** |
+| Challenge description containing references to individuals | Organisation input | Define the problem and diagnostic scope | **TBD** | **TBD** |
+| Inferences or findings about identifiable individuals, if generated | Intellectus output | Support the diagnostic only where strictly necessary | Must follow the underlying purpose; **TBD** | **TBD** |
+| Article 9 data, if present | Mainly internal documents | Not required by default; any use requires specific justification | Exclude/minimise unless lawfully justified; period **TBD** | **TBD** |
 
-## Purpose limitation
+## Purpose limitation risk
 
-The demonstrated MVP mainly uses public evidence and controlled inputs.
+There is a clear risk of secondary use.
 
-The higher-risk reuse occurs if internal documents are added. Those documents may originally have been collected for HR administration, volunteer management, donor management, safeguarding or beneficiary service delivery. Using the same identifiable information for an AI-assisted organisational diagnostic is a separate use and cannot simply be assumed compatible.
+Internal documents may originally have been collected for HR administration, volunteer management, donor relationships, service delivery or beneficiary support and later reused for an AI-assisted organisational diagnostic.
 
-Before enabling internal documents, the controller should:
+That further use cannot automatically be assumed compatible.
 
-1. identify the original collection purpose;
-2. assess compatibility with the new diagnostic purpose;
-3. establish whether identifiable information is actually necessary;
-4. remove or anonymise unnecessary personal data;
-5. establish a lawful basis for the remaining processing.
+Before internal documents are processed, the controller should document:
 
-**Current status: unresolved for production use.**
+1. the original purpose;
+2. the new diagnostic purpose;
+3. the relationship between the two;
+4. the collection context;
+5. the reasonable expectations of the individuals;
+6. the nature of the data;
+7. the safeguards available.
 
----
+Where identification is unnecessary, personal data should be removed, aggregated or pseudonymised before entering the workflow.
+
+**Status: production gap. Compatibility has not been established.**
 
 # Phase 2 — Role Map
 
-| Entity | Role | Processing activity | DPA in place? |
+| Entity | Provisional role | Activity | DPA / contract status |
 |---|---|---|---|
-| Client social-impact organisation | Controller | Determines why its information is submitted and what business purpose the diagnostic serves | N/A as controller |
-| Intellectus service operator | Likely processor in the intended client-service model | Processes data on the client's instructions to produce diagnostic support | Required before real client personal data is processed |
-| Consultant / project team | Depends on operating model | Intake, review and use of diagnostic output | TBD — role should be documented |
-| n8n hosting/provider | Processor or subprocessor if hosted infrastructure receives personal data | Workflow orchestration and execution data | TBD |
-| Hosting/storage provider | Processor/subprocessor | Application or document storage | TBD |
-| External AI provider, if enabled | Processor/subprocessor in the expected service model | Model inference on submitted content | Not part of the demonstrated retained MVP; DPA required before use with personal data |
-| External research provider, if client data is transmitted | Processor/subprocessor or separate controller depending on service | Research/enrichment | TBD |
+| Spanish social-impact organisation | **Controller, in principle** | Determines the purpose of the diagnostic and what information is provided | No DPA with itself; must document processor instructions |
+| Intellectus operator | **Likely processor**, if acting only on client instructions | Processes information to produce diagnostic support | **TBD — Article 28 agreement required before real data** |
+| Reviewing consultant | Authorised person under the organisation employing or engaging them; separate role **TBD** | Reviews evidence and diagnostic before use | Do not assume a separate role without contractual context |
+| n8n infrastructure | **TBD depending on deployment** | Workflow orchestration and possible execution logs | If self-hosted, n8n GmbH may not process content; if n8n Cloud is used, assess vendor role and contract |
+| Research services | **TBD by provider and transmitted data** | Search, verification or enrichment | **TBD** |
+| External AI provider, if enabled | Likely processor/subprocessor only if acting on instructions and without its own purpose | Model inference on submitted content | **TBD — DPA and terms required before personal data is sent** |
+| Hosting / storage provider, if any | Likely processor/subprocessor | Storage, logs and backups | **TBD** |
 
-The classification above assumes Intellectus acts only on the client's documented instructions. If the Intellectus operator independently reuses client personal data for its own model training, product development or other purposes, the role analysis would change and cannot be treated as a straightforward processor relationship.
+The classification depends on who determines the purposes and essential means of processing.
+
+If the Intellectus operator or any provider reuses client personal data for model training, product analytics, service improvement or another independent purpose, the processor analysis must be revisited.
 
 ## International transfers
 
-No complete production transfer map is documented.
+There is not enough evidence to confirm whether personal data leaves the EEA.
 
-Before processing real client data, each relevant vendor must be checked for:
+Before production, the following must be established for each provider:
 
-- processing and storage region;
+- storage region;
+- processing region;
+- remote access locations;
 - subprocessors;
-- access from outside the EEA;
-- applicable adequacy decision, SCCs or other transfer mechanism;
-- supplementary safeguards where required.
+- onward transfers.
 
-**Current status: cannot determine from the MVP.**
+If a transfer to a third country takes place, the applicable Chapter V mechanism must be identified.
 
----
+This may involve an adequacy decision or Article 46 safeguards such as SCCs where appropriate.
+
+**No transfer mechanism is assumed.**
+
+**Status: TBD and a go-live condition.**
 
 # Phase 3 — Lawful Basis Assessment
 
-| Purpose | Proposed lawful basis | Justification | Legal review? |
+| Purpose | Proposed lawful basis | Rationale | Legal review |
 |---|---|---|---|
-| Use public professional information to understand organisational context | Legitimate interests | Bounded professional research may support a legitimate organisational diagnostic, subject to necessity and balancing | Yes — LIA documented below |
-| Process consultant/client contact and contextual information | Legitimate interests | Limited business-contact processing is reasonably connected to delivering the consulting service | Yes — LIA documented below |
-| Process employee/volunteer data from internal documents | TBD — legal review | The need for identifiable data and compatibility with the original collection purpose are not established | Yes |
-| Process donor data | TBD — legal review | Donors may not reasonably expect their information to be reused for AI-assisted diagnostics | Yes |
-| Process beneficiary data | TBD — legal review | Potential vulnerability and purpose mismatch materially increase privacy risk | Yes |
-| Process Article 9 data | TBD — Article 6 basis plus Article 9 condition required | Article 6 alone is insufficient for special-category processing | Yes |
-| Generate recommendations containing personal data | Follows the lawful basis of the underlying processing | AI generation does not create a new lawful basis | Yes where identifiable information is used |
+| Receive organisational context and minimum professional contact data | **Article 6(1)(f) — legitimate interests, provisional** | There is a genuine interest in delivering the service and coordinating the diagnostic, provided processing is limited to what is necessary | Yes — LIA A |
+| Research public professional information where necessary to verify context | **Article 6(1)(f) — legitimate interests, provisional** | Relevant public information may help verify facts, but public availability does not remove GDPR protection | Yes — LIA B |
+| Analyse employee or volunteer data contained in internal documents | **TBD — legal review** | Necessity, original purpose and reasonable expectations have not been established | Yes |
+| Analyse donor data | **TBD — legal review** | The basis depends on the original relationship, purpose, necessity and transparency | Yes |
+| Analyse beneficiary data | **TBD — legal review** | Potential vulnerability and higher impact make a blanket legitimate-interest basis inappropriate | Yes |
+| Process special-category data | **TBD — Article 6 basis + Article 9(2) condition required** | Article 9 requires an additional condition | Yes — blocking if these data enter the workflow |
+| Generate a diagnostic containing personal data | Follows the lawful basis of the underlying purpose | Producing an output does not create a new lawful basis | Yes where identifiable data are included |
 
-## Legitimate Interests Assessment
+Article 6(1)(b) is not proposed as a general basis.
 
-### 1. Purpose test
+A consulting contract may be concluded with a legal entity. That does not automatically make the processing of employee, volunteer, donor or beneficiary data necessary for a contract with those individuals.
 
-**Public professional research:** The organisation has a legitimate interest in understanding publicly documented facts relevant to its operations and context.
+## LIA A — Organisational context and minimum professional contact data
 
-**Client/consultant business context:** There is a legitimate operational interest in receiving the information required to provide the diagnostic service.
+### Purpose test
+
+The organisation and Intellectus operator have a specific and legitimate interest in coordinating the service and understanding the organisational challenge.
 
 **Result:** satisfied in principle.
 
-### 2. Necessity test
+### Necessity test
 
-Processing should be limited to information that materially contributes to the diagnostic. Identifiable information should not be retained merely because it appears in a source.
+Processing should be limited to the professional information genuinely needed to deliver the service.
 
-Less intrusive alternatives include:
+If a role or function is sufficient, additional personal information should not be retained.
 
-- removing names where roles are sufficient;
-- redacting irrelevant information;
-- aggregating findings;
-- using organisational-level evidence instead of person-level evidence.
+**Result:** satisfied only where minimisation is applied.
 
-**Result:** only satisfied where minimisation is applied.
+### Balancing test
 
-### 3. Balancing test
+The privacy impact is relatively limited where processing concerns predictable professional information used within a business relationship.
 
-Public professional information used in a bounded business context creates a lower privacy impact than private employee, donor or beneficiary data. Nevertheless, individuals may still have privacy interests and rights even where information is publicly accessible.
+The balance becomes less favourable where the data include personal assessments, sensitive information or information that the individual would not reasonably expect to be reused.
 
-The balance becomes materially less favourable where the system handles vulnerable people, sensitive information, unexpected secondary uses or person-level inferences.
+**Conclusion:** legitimate interests may be workable with minimisation and transparency, but the LIA should be documented before production.
 
-**Result:** legitimate interests may support bounded public/business-context processing but should not be used as a blanket basis for all future Intellectus processing.
+## LIA B — Public professional research
 
----
+### Purpose test
+
+Verifying facts relevant to an organisational diagnostic can constitute a specific legitimate interest.
+
+**Result:** potentially satisfied.
+
+### Necessity test
+
+The need for personal information should be assessed for each research activity.
+
+If the same objective can be achieved using non-personal organisational information, the less intrusive option should be preferred.
+
+**Result:** conditional.
+
+### Balancing test
+
+The fact that information has already been published may reduce expectations of confidentiality, but it does not remove the individual’s GDPR rights.
+
+The assessment should consider:
+
+- the context in which the information was published;
+- how old it is;
+- whether several sources are being combined;
+- whether new inferences are being made.
+
+**Conclusion:** public professional information should not be treated as a general licence to collect information about individuals. Use should remain bounded, necessary and documented.
 
 # Phase 4 — Risk and Rights Analysis
 
 ## Special-category data — Article 9
 
-**Current MVP:** no systematic use of Article 9 information is demonstrated.
+The scenario does not confirm that Intellectus processes special-category data.
 
-**Production risk:** internal documents from social-impact organisations may contain health, disability, ethnic origin, religious beliefs, political opinions, trade-union membership or other sensitive information.
+However, internal documents from a social-impact organisation could contain information relating to health, disability, ethnic origin, religion, political opinions, trade-union membership or other protected categories.
 
-No Article 9 condition is currently documented. Intellectus should therefore default to excluding or redacting these categories unless processing is demonstrably necessary and both a valid Article 6 basis and Article 9 condition are established.
+No Article 9(2) condition is currently documented.
 
-**Assessment: significant prospective gap.**
+If these data appear, the default approach should be to exclude or redact them unless the organisation can demonstrate:
+
+- necessity;
+- a valid Article 6 basis;
+- a specific Article 9(2) condition.
+
+**Status: potentially high risk and a blocking condition if these data are processed without a documented legal basis.**
 
 ## Automated decision-making — Article 22
 
-The current system does not make solely automated decisions with legal or similarly significant effects on individuals.
+Based on the current scenario, Intellectus does not make a solely automated individual decision producing legal or similarly significant effects.
 
-The output supports a consultant's organisational diagnostic and human review is mandatory before client use.
+It produces an organisational diagnostic, and consultant review is mandatory before client use.
 
-The safeguard must remain meaningful. A consultant should be able to:
+The safeguard only works if the review is meaningful.
 
-- inspect the supporting evidence;
-- challenge an inference;
-- reject or modify a recommendation;
-- identify unknowns and unsupported claims.
+The consultant should have the competence and authority to:
 
-If Intellectus later scores, ranks or recommends consequential action concerning identifiable people, the Article 22 assessment must be reopened.
+- inspect source evidence;
+- identify errors;
+- challenge inferences;
+- change or reject the output.
 
-**Current assessment: Article 22 not triggered by the demonstrated use case.**
+There should also be evidence that the review actually took place.
 
-## DPIA trigger
+**Status of review procedure and audit trail: TBD.**
 
-A formal DPIA screening should be completed before real internal client data is enabled.
+**Conclusion:** Article 22 does not appear to apply to the current scenario. The assessment must be reopened if Intellectus begins scoring, ranking or recommending consequential action about individuals.
 
-| EDPB criterion | Assessment |
+## DPIA screening
+
+The relevant question is whether the processing is likely to result in a high risk to the rights and freedoms of individuals.
+
+The EDPB uses nine criteria as guidance.
+
+| EDPB criterion | Intellectus assessment |
 |---|---|
-| Evaluation or scoring of people | Not part of the current design; could become relevant if person-level evaluation is added |
-| Automated decision-making with significant effects | Not demonstrated |
-| Systematic monitoring | Not demonstrated |
-| Sensitive / special-category data | Potentially applicable with internal client documents |
-| Large-scale processing | Not demonstrated |
-| Matching or combining datasets | Potentially applicable if multiple client/research sources are combined |
-| Vulnerable data subjects | Potentially applicable, particularly beneficiaries |
-| Innovative technology | Applicable — AI-assisted diagnostic workflow |
-| Processing that may prevent exercise of rights / cross-border complexity | Potentially applicable depending on architecture |
+| Evaluation or scoring of individuals | **Not observed.** The current diagnostic is organisational |
+| Automated decision-making with legal or similar significant effect | **Not observed** due to mandatory human review |
+| Systematic monitoring | **Not observed / TBD** |
+| Sensitive or highly personal data | **TBD / potentially applicable** through internal documents |
+| Large-scale processing | **TBD** — volume, frequency, duration and scope are unknown |
+| Matching or combining datasets | **TBD / potentially applicable** if internal documents and external research are combined at individual level |
+| Vulnerable data subjects | **TBD / potentially applicable** — the term “beneficiary” alone is not enough to assume vulnerability |
+| Innovative use of technology | **Yes, reasonably applicable** due to AI-assisted diagnostic processing |
+| Processing preventing individuals from exercising rights or using a service/contract | **Not observed** |
 
-The intended production model could meet at least two criteria, particularly innovative technology combined with vulnerable data subjects, sensitive information or dataset combination.
+International transfers are not one of the nine standard EDPB criteria. They should be assessed separately under GDPR Chapter V.
 
-**Conclusion:** DPIA screening is required before production use with real internal data. If the actual deployment confirms two or more relevant high-risk criteria, a DPIA should be completed before that processing begins.
-
-**Current project status:** no formal DPIA is evidenced.
+**Conclusion:** A formal DPIA screening must be completed before any real internal client documents enter the workflow. For the current public/demo MVP, the available evidence does not establish that a full DPIA is already required. However, if the intended production deployment includes internal documents containing sensitive or highly personal information, vulnerable data subjects, combined client and public-source datasets, and AI-supported analysis, Intellectus should complete a full DPIA before the pilot begins. The final decision must be documented against the actual production scope, data categories, scale, providers and safeguards.
 
 ## Data-subject-rights friction
 
-### Right of access
+| Right | Operational risk | Current status |
+|---|---|---|
+| Information / transparency | Data may come indirectly from internal documents or research, so the organisation must determine what information must be provided and through which channel | **TBD** |
+| Access | The same person may appear across documents, logs, prompts, responses and the diagnostic | **TBD — no evidenced workflow** |
+| Rectification | Correcting the source document does not automatically correct previously generated outputs | **TBD** |
+| Erasure | Deletion may need to propagate across storage, logs, backups and processors | **TBD** |
+| Objection | Particularly relevant where Article 6(1)(f) is relied upon | **TBD** |
+| Restriction | The organisation must be able to suspend relevant processing where the right applies | **TBD** |
 
-Personal information could appear in source documents, n8n execution data and generated outputs.
+The controller must be able to respond to data-subject requests within the GDPR time limits.
 
-The current project does not demonstrate an end-to-end method for locating all records relating to one person.
+A production design should maintain sufficient traceability to locate information across the full processing chain.
 
-**Status: gap for production.**
+**Minimum technical traceability requirement:**
 
-### Right to rectification
-
-Correcting an original source does not automatically prove that previously generated findings or retained workflow data have also been corrected.
-
-**Status: gap for production.**
-
-### Right to erasure
-
-The MVP does not demonstrate deletion across every potential processing layer, including uploaded documents, application storage, workflow history and future third-party processors.
-
-**Status: gap for production.**
-
-### Right to object
-
-Where legitimate interests is relied upon, the controller needs an operational process for receiving and assessing objections.
-
-**Status: not demonstrated.**
-
-### Operational requirement
-
-A production design should be able to trace:
-
-**data subject → source → processing run → generated output → storage location → deletion/correction action**
-
-without relying on manual guesswork.
-
----
+```text
+data subject
+→ source
+→ workflow / run
+→ provider
+→ output
+→ storage location
+→ correction / deletion action
+```
 
 # Phase 5 — Law Stacking
 
-## AI Act cross-check
+## AI Act
 
-**Current hypothesis: minimal/limited-risk decision-support use, not an Annex III high-risk use case.**
+There is currently no evidence that Intellectus falls within an Annex III high-risk use case.
 
-Intellectus currently supports an organisational consultant and does not make employment, education, credit, essential-service or other consequential decisions about individuals.
+The current system supports an organisational diagnostic and is not described as being used for recruitment, employment management, access to essential services or another listed consequential decision about individuals.
 
-The AI Act can still add governance expectations beyond GDPR, including transparency, AI literacy, documentation and effective human oversight.
+The classification should be reassessed if the purpose changes.
 
-This classification must be reassessed if Intellectus is later used to score, rank or recommend consequential actions concerning identifiable individuals.
+Relevant AI Act checks for the current design include:
 
-## ePrivacy check
+- AI literacy obligations;
+- transparency requirements where applicable;
+- effective human oversight;
+- clear communication of the role of AI in the diagnostic process.
 
-The demonstrated core workflow does not depend on advertising cookies, tracking pixels, telecommunications metadata or device-level behavioural tracking.
+## ePrivacy
 
-**Current assessment: not applicable to the demonstrated processing.**
+The scenario does not provide enough information about cookies, tracking pixels, fingerprinting or access to information stored on a user’s device.
 
-If analytics or tracking technologies are added to the production web application, ePrivacy consent requirements must be assessed separately.
+**Status: TBD, not N/A.**
 
-## Data Act check
+If the production web application uses non-essential tracking technologies, an ePrivacy / Spanish LSSI consent assessment will be required.
 
-The demonstrated system does not use connected-product data, IoT data or a cloud-switching use case.
+## Data Act
 
-**Current assessment: not applicable.**
+No connected products or IoT-generated data are described in the current scenario.
 
----
+The potential use of cloud services is not enough, on its own, to determine which Data Act switching obligations would apply.
+
+**Status:** no material impact demonstrated for the current personal-data workflow. Reassess once the production cloud architecture is confirmed.
 
 # Accountability Check
 
-Could the current Project 3 documentation alone demonstrate GDPR compliance to a regulator?
+Could the current documentation demonstrate full GDPR compliance to a supervisory authority?
 
 **No.**
 
-The technical MVP documents the workflow and review boundary well, but several production compliance artifacts are missing or incomplete.
+The current assessment identifies several controls that would still need evidence before production use with real personal data.
 
-| Compliance evidence | Current status |
+| Accountability evidence | Current status |
 |---|---|
 | Data processing brief | Completed in this lab |
-| Personal data inventory | Completed as first-pass assessment |
-| Controller/processor role map | Provisional |
-| Lawful basis assessment | Partial / production legal review required |
-| LIA | Preliminary assessment completed |
-| Article 9 assessment | Production condition not established |
-| DPIA screening | Not formally completed |
-| DPIA | Not completed |
-| Vendor DPAs | Not evidenced |
-| Subprocessor register | Not evidenced |
-| International transfer assessment | Not evidenced |
-| Privacy notice covering Intellectus processing | Not evidenced |
-| Retention schedule | Not evidenced |
-| Data-subject-rights procedure | Not evidenced |
-| Incident response procedure | Not evidenced |
-| Human-review control | Present as a design principle; production governance still required |
+| Data and purpose inventory | Completed as a first-pass assessment |
+| Controller / processor map | Completed provisionally |
+| LIA | Preliminary assessment completed for two purposes |
+| Article 28 DPAs | **TBD / not evidenced** |
+| Subprocessor register | **TBD / not evidenced** |
+| Record of Processing Activities (ROPA) | **TBD / not evidenced** |
+| Formal DPIA screening | Recommended; not yet evidenced |
+| Full DPIA | **Not completed** |
+| Privacy notice covering Intellectus processing | **TBD / not evidenced** |
+| Retention and deletion policy | **TBD / not evidenced** |
+| Data-subject-rights procedure | **TBD / not evidenced** |
+| International transfer map and mechanism | **TBD / not evidenced** |
+| Evidence of meaningful human review | Design requirement exists; procedure / audit trail **TBD** |
+| Incident-response process | **TBD / not evidenced** |
 
----
+# Data Protection by Design
 
-# Overall Assessment
+Highest-risk activity assessed: ingestion of internal documents that may contain personal data relating to employees, volunteers, donors or beneficiaries.
 
-## PROCEED WITH CONDITIONS
+| Principle | Current state | Assessment | Required change |
+|---|---|---|---|
+| Data minimisation | No evidenced pre-ingestion filter | **FAIL / TBD** | Redact or exclude unnecessary personal data before it reaches n8n or an AI provider |
+| Purpose limitation | Secondary use is not assessed per document/source | **FAIL / TBD** | Record original purpose and compatibility |
+| Access control | No RBAC model is evidenced | **UNKNOWN** | Define roles, permissions and access logs |
+| Retention | No automatic deletion rule or schedule is evidenced | **FAIL / TBD** | Define retention periods and verifiable deletion |
+| Data-subject rights | No end-to-end traceability is evidenced | **FAIL / TBD** | Implement workflows for access, rectification, erasure, restriction and objection |
+| Incident handling | No documented process is evidenced | **UNKNOWN** | Define detection, escalation and breach-assessment procedures |
 
-The demonstrated public/demo MVP does not need to be stopped.
+# Blocking Actions and Owners
 
-The production boundary should, however, remain closed to real internal client personal data until the following minimum controls are completed:
+| Priority | Action | Primary owner | Closure criterion |
+|---|---|---|---|
+| **P0** | Complete the real data map: providers, hosting, logs, subprocessors, data sent and processing regions | **Intellectus operator** | Approved technical diagram and processing register |
+| **P0** | Determine Article 6 basis by purpose, secondary-use compatibility and Article 9 treatment | **Client + Legal/DPO** | Lawful bases documented; LIA / Article 9 condition completed where required |
+| **P0** | Confirm roles and put Article 28 DPAs in place before processor access to real data | **Client + Legal + Intellectus operator** | Contracts signed and subprocessors documented |
+| **P0** | Resolve international transfers | **Intellectus operator + Legal** | Countries, Chapter V mechanism and safeguards documented |
+| **P0** | Complete formal DPIA screening and a full DPIA if required | **Client + DPO/Legal** | Documented decision; DPIA approved where necessary |
+| **P1** | Define retention, deletion, data-subject-rights procedures and evidence of human review | **Client + Intellectus operator** | End-to-end procedures tested |
 
-1. lawful basis and purpose compatibility are established for each production processing purpose;
-2. unnecessary personal and special-category data are technically minimised before processing;
-3. controller/processor roles, DPAs, subprocessors and international transfers are documented;
-4. DPIA screening is completed and a DPIA performed if required;
-5. retention and data-subject-rights procedures are operational;
-6. mandatory consultant review is preserved as an auditable production control.
+# Overall Recommendation
 
-The central GDPR risk is not the existing public-data demonstration. It is an uncontrolled transition from that evidence boundary to private client documents without adding the governance that the new data requires.
+**PROCEED WITH CONDITIONS**
+
+Development and testing of Intellectus can continue.
+
+However, the workflow should not be opened to real internal documents containing personal data until the P0 actions above are closed.
+
+The strongest element of the current design is mandatory consultant review.
+
+The main compliance gaps sit around the model rather than inside it: lawful basis, secondary-use compatibility, data minimisation, processor governance, international transfers, DPIA screening, retention and the operational ability to honour data-subject rights.
+
+## References
+
+- GDPR: https://eur-lex.europa.eu/eli/reg/2016/679/oj
+- EDPB Guidelines 07/2020 on controller and processor concepts
+- EDPB guidance on legitimate interests
+- EDPB guidance on DPIAs and high-risk processing
+- EDPB guidance on automated decision-making and profiling
+- AEPD guidance on Data Protection Impact Assessments
+- European Commission guidance on Standard Contractual Clauses
+- European Commission guidance on the AI Act
+- European Commission guidance on the Data Act
