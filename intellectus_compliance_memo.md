@@ -1,19 +1,17 @@
 # Intellectus — GDPR Compliance Recommendation Memo
 
-**To:** Data Protection Officer / Legal Counsel
-**Subject:** First-pass GDPR assessment of Intellectus
-**Recommendation:** Proceed with conditions
+**To:** DPO / Legal Counsel, Spanish social-impact organisation  
+**Subject:** Privacy conditions for using Intellectus with internal documents  
+**Recommendation:** **Proceed with conditions**
 
-Intellectus can continue toward production, but the current public/demo boundary should remain in place until the system is ready to handle real client personal data. The MVP is comparatively controlled: it relies on bounded public evidence, sample data and mandatory consultant review. The material GDPR risk appears when Intellectus starts accepting internal documents about employees, volunteers, donors or beneficiaries.
+Intellectus can continue to move towards production, but real internal documents containing personal data should not enter the workflow until several controls are in place. The design already includes an important safeguard: the diagnostic cannot be used directly and must first be reviewed by a consultant. That review matters, but it does not resolve the underlying questions around lawful basis, data minimisation, third-party providers, international transfers or data-subject rights.
 
-Three actions should be completed before that change.
+The first priority is to **define the purpose and lawful basis for each type of processing**. The organisation needs to separate information that is genuinely required for the diagnostic from information that simply happens to appear in a document. Employee, volunteer, donor and beneficiary data may have been collected for a different original purpose. Compatibility therefore needs to be assessed, unnecessary identifiers should be removed, and the legal basis should be documented. If Article 9 special-category data appear, they should not be processed unless a valid condition has been established or the data are excluded from the workflow.
 
-**First, define the permitted data and lawful basis for each purpose.** The client should decide which personal data the diagnostic actually needs, document the original purpose of internal source documents and assess whether reuse for Intellectus is compatible. Legitimate interests may support bounded public professional research, but it should not become a blanket justification for internal personal data. Unnecessary identifiers should be removed before processing, and special-category data should be excluded by default unless an Article 9 condition is established.
+The second priority is to **complete the provider and contract map before real data starts moving through the system**. The n8n deployment model, research services, hosting and any external AI provider must be confirmed. Article 28 terms should be in place for processors and subprocessors, and any transfer outside the EEA must have a documented Chapter V mechanism. These points are currently TBD and should not be treated as resolved.
 
-**Second, complete the processor and transfer review.** Every production provider involved in hosting, workflow execution, storage, research or AI inference should be mapped. Required DPAs must be in place, subprocessors identified and processing locations confirmed. If data leaves the EEA, the applicable transfer mechanism must be documented rather than assumed.
+The third priority is to **complete DPIA screening and make retention and data-subject rights operational**. AI-assisted processing is an innovative use of technology, and additional criteria may apply if the deployment involves sensitive data, vulnerable individuals or meaningful dataset combination. The system also needs to support access, correction and deletion across documents, logs, providers and generated outputs.
 
-**Third, complete DPIA screening and make data-subject rights operational.** A production deployment involving vulnerable beneficiaries, sensitive information or combined datasets may meet multiple DPIA criteria. The architecture must also support access, correction and deletion across source documents, workflow records and generated outputs.
+Residual risks will remain even after these controls are implemented, including unexpected sensitive data in source documents, inaccurate inferences and reliance on third-party providers. Mandatory consultant review should remain a real approval control, with authority to reject conclusions and evidence that the review took place.
 
-Residual risks remain even after these controls. Internal documents may contain unexpected sensitive information; AI-generated analysis can create inaccurate or excessive inferences; and third-party providers introduce continuing retention, transfer and subprocessor risk. Mandatory consultant review should therefore remain a documented approval gate, not simply a user-interface step.
-
-This assessment is not a legal opinion, formal DPIA or certification of compliance. The client's DPO or legal counsel should validate the final production design before real internal personal data is enabled.
+This memo is a first-pass compliance assessment. **It is not a legal opinion, a DPIA or a certification of compliance.** The final production design should be validated by the organisation’s DPO or legal counsel before real personal data is processed.

@@ -1,99 +1,122 @@
 # Intellectus — Data Processing Brief
 
-## System and scope
+## Scenario and scope
 
-Intellectus is a consultant-facing diagnostic system developed for social-impact organisations. It helps structure an organisational challenge, gather and separate evidence from assumptions, identify gaps and root causes, and prepare a draft diagnostic for consultant review.
+A Spanish social-impact organisation uses Intellectus to analyse its operations and prepare an organisational diagnostic.
 
-The current Project 3 MVP and the intended production model need to be separated for GDPR purposes. The demonstrated MVP uses bounded public evidence, controlled fixtures and sample data. The public project repository does not contain private client datasets. A future deployment, however, could allow a client to submit internal documents containing personal data.
+The system receives information about the organisation, a description of the challenge, and internal documents that may contain personal data relating to employees, volunteers, donors or beneficiaries.
 
-## Personal data
+The working flow is:
 
-### Demonstrated MVP
+```text
+Spanish social-impact organisation
+        ↓
+Intellectus web application
+        ↓
+n8n
+        ↓
+Research services
+        ↓
+Potential external AI provider
+        ↓
+Draft diagnostic
+        ↓
+Mandatory consultant review
+        ↓
+Client use
+```
 
-Personal data may arise indirectly in public-source research, for example:
+This assessment distinguishes between three levels of evidence:
 
-- names of founders, directors or employees;
-- professional roles;
-- public professional statements;
-- other information relating to identifiable people contained in public sources.
+- **Observed / stated** — explicitly included in the agreed scenario or project design.
+- **Prospective** — relevant to production use with real personal data but not evidenced as implemented.
+- **TBD** — facts that are not sufficiently documented and must be confirmed before production.
 
-Public availability does not by itself remove information from GDPR scope.
+Lack of evidence is not treated as evidence of compliance.
 
-The MVP also processes consultant-entered organisational context and controlled fictional/sample records.
+## Personal data and sources
 
-### Intended production use
+The scenario may involve personal data because internal documents and external research can refer to identified or identifiable people.
 
-If internal client documents are enabled, Intellectus could additionally receive:
+| Data category | Source | Current status |
+|---|---|---|
+| Names, roles and professional information of employees or volunteers | Internal documents / organisation input | Possible; exact fields TBD |
+| Donor information | Internal documents | Possible; detail TBD |
+| Beneficiary information | Internal documents | Possible; detail TBD |
+| Free text written by or about individuals | Internal documents / challenge description | Possible |
+| Professional information from external sources | Research services | Possible; provider and queries TBD |
+| Inferences about identifiable individuals | Diagnostic output | Prospective / depends on input |
+| Article 9 special-category data | Internal documents | **TBD — not confirmed** |
 
-- employee and volunteer names and roles;
-- professional contact information;
-- comments written by or about individuals;
-- consultant notes referring to identifiable people;
-- donor information;
-- beneficiary information;
-- attributes or inferences generated from those materials.
+Internal documents could contain information about health, disability, ethnic origin, religion, political opinions, trade-union membership or other special categories under Article 9.
 
-Internal documents may also contain Article 9 data, including health, disability, ethnicity, religious or political beliefs, trade-union membership or other special-category information. Intellectus does not need these categories by default, so their ingestion should not be treated as necessary simply because they appear in a source document.
+The scenario does not confirm that these categories are actually present.
 
-## Sources
+The volume, frequency and number of data subjects are also currently unknown.
 
-The demonstrated workflow uses:
+## Processing purposes
 
-1. consultant/user input through the web interface;
-2. public web research;
-3. a local RAG knowledge corpus;
-4. controlled fixtures and retained sample runs.
+Information is used to:
 
-A future production workflow may also use internal organisational documents and consultant notes supplied by the client.
+1. understand the organisation and the challenge being analysed;
+2. review internal evidence;
+3. supplement the analysis with external research where necessary;
+4. identify root causes, evidence gaps and possible actions;
+5. prepare a draft organisational diagnostic;
+6. submit the diagnostic to human review before it is used with the client.
 
-## Purposes
+Identifying an individual is not necessary for every purpose.
 
-Information is processed to:
+Where identity does not add value to the analysis, personal data should be removed, redacted, aggregated, anonymised or pseudonymised as appropriate.
 
-1. understand the organisation and its challenge;
-2. identify evidence, unknowns and gaps;
-3. support root-cause analysis;
-4. develop priorities, recommendations and KPIs;
-5. prepare a draft diagnostic for consultant review.
+## Processing actors
 
-The system does not need to identify individuals for every one of these purposes. Where identity adds no analytical value, personal data should be removed, redacted, aggregated or anonymised before processing.
+The Spanish organisation decides why the diagnostic is requested and what information is provided.
 
-## Processing chain
+The legal role of the Intellectus operator and each third party cannot be determined from the technical architecture alone. Controller, processor and subprocessor roles depend on what each party actually does with the data and whose instructions it follows.
 
-The demonstrated path is:
+The presence of n8n in the workflow does not, by itself, prove that n8n GmbH processes client content. This depends on whether the deployment is self-hosted or cloud-based.
 
-Client / Consultant input
-→ Intellectus web application
-→ n8n workflow orchestration
-→ public research and specialist analysis
-→ structured validated response
-→ consultant review
-→ client-facing diagnostic
+The identity, location and contractual terms of any external AI provider or research service are also **TBD**.
 
-The current retained MVP does not establish that a production external LLM processes private client data.
+## Storage and international transfers
 
-If a hosted AI provider, hosted n8n service, cloud storage provider or additional research vendor is introduced, its role, DPA, processing location, subprocessors and transfer mechanism must be checked before personal data is sent to it.
-
-## Storage and processing location
-
-The Project 3 documentation does not establish a complete production hosting model, retention schedule or international-transfer mechanism for real client data.
+The current scenario does not establish where the application, n8n instance, logs, documents, outputs or subprocessors are hosted.
 
 Current status:
 
-**TBD — vendor and legal review before production use.**
+- storage location: **TBD**;
+- processing location: **TBD**;
+- transfers outside the EEA: **TBD**;
+- transfer mechanism: **TBD — no adequacy decision or SCCs assumed**;
+- retention and deletion periods: **TBD**.
 
-No EU-only hosting, adequacy decision or Standard Contractual Clauses are assumed without evidence.
+Before real personal data is processed, Intellectus needs a documented map covering providers, subprocessors, hosting regions, retention and data flows.
 
 ## Decisions affecting individuals
 
-Intellectus is designed as consultant decision support, not as an autonomous decision-maker about individuals.
+Intellectus produces an organisational diagnostic.
 
-It does not currently hire, dismiss, rank, score, approve or reject employees, volunteers, donors or beneficiaries. A consultant must review the evidence, hypotheses and proposed recommendations before an output is used with a client.
+The scenario requires a consultant to review the diagnostic before it is used with the client.
 
-On the current facts, the system does not perform solely automated decision-making with legal or similarly significant effects under Article 22. This conclusion would need to be revisited if future versions were used to evaluate or recommend actions concerning identifiable individuals.
+No hiring, dismissal, ranking, scoring, eligibility decision or other individual decision with legal or similarly significant effects is described.
 
-## Current conclusion
+Based on the available facts, there is no evidence of a decision based solely on automated processing within the meaning of GDPR Article 22.
 
-The demonstrated MVP has limited personal-data exposure. The material GDPR risk appears when moving from public/demo evidence to real internal client documents.
+However, human review must be meaningful. The consultant must be able to inspect the evidence, challenge inferences, and modify or reject conclusions.
 
-Before that transition, Intellectus needs documented lawful bases, purpose limitation, minimisation rules, processor governance, retention, transfer controls, data-subject-rights procedures and formal DPIA screening.
+Evidence that this review is formally governed and recorded is currently **TBD**.
+
+## Conclusion
+
+Intellectus falls within GDPR scope whenever internal documents or research contain personal data.
+
+The main compliance risk arises when real internal documentation enters a processing chain whose contracts, hosting, retention, transfers and data-subject-rights procedures have not yet been evidenced.
+
+**Production rule:** real personal data should not be sent to any component whose role, contract, location, retention and support for data-subject rights have not been documented.
+
+## References
+
+- GDPR, Articles 4, 5, 6, 9, 22, 28, 35 and 44–46
+- EDPB Guidelines 07/2020 on the concepts of controller and processor
+- EDPB Guidelines on automated individual decision-making and profiling
