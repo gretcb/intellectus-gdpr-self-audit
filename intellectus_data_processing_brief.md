@@ -2,9 +2,13 @@
 
 ## Scenario and scope
 
-A Spanish social-impact organisation uses Intellectus to analyse its operations and prepare an organisational diagnostic.
+This audit covers Intellectus, the AI-assisted organisational diagnostic system built for Project 3.
 
-The system receives information about the organisation, a description of the challenge, and internal documents that may contain personal data relating to employees, volunteers, donors or beneficiaries.
+The demonstrated Project 3 MVP uses the Intellectus web application, n8n-based workflow orchestration, public research and mandatory consultant review. The current public/demo implementation does not claim to process real private client documents.
+
+For GDPR stress-testing, this audit also assesses the intended production boundary in which a Spanish social-impact organisation could submit information about its operations, a description of its challenge and internal documents that may contain personal data relating to employees, volunteers, donors or beneficiaries.
+
+Prospective production risks are clearly separated from controls and data flows demonstrated in the system that was actually built.
 
 The working flow is:
 

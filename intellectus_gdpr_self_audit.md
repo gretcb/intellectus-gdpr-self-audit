@@ -2,7 +2,7 @@
 
 ## Scope and method
 
-This self-audit assesses the agreed Intellectus scenario: a Spanish social-impact organisation provides information about its operations, a description of its challenge and internal documents. The information passes through the Intellectus web application, n8n, research services and potentially an external AI provider. The diagnostic must be reviewed by a consultant before it is used with the client.
+This self-audit assesses Intellectus, the Project 3 system that was actually built, together with its intended evolution from the demonstrated public/demo MVP to production use with real client data. The production assessment considers a Spanish social-impact organisation providing operational information, a challenge description and potentially personal-data-containing internal documents. Prospective production processing is explicitly distinguished from functionality and controls evidenced in the current MVP.
 
 Three labels are used throughout the assessment:
 
