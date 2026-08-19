@@ -7,7 +7,10 @@ This repository contains everything you need for this lab.
 ## Files
 
 - [`instructions.md`](./instructions.md) — the lab instructions
-- [`rubric.md`](./rubric.md) — how your submission is graded; this is what the AI reviewer checks your PR against
+- [`rubric.md`](./rubric.md) — the grading rubric used by the AI reviewer
+- [`intellectus_data_processing_brief.md`](./intellectus_data_processing_brief.md) — first-pass data processing brief covering personal data, sources, purposes, processors, storage, transfers, and automated decision-making
+- [`intellectus_gdpr_self_audit.md`](./intellectus_gdpr_self_audit.md) — full GDPR self-audit covering data inventory, roles, lawful basis, risks, rights, DPIA screening, law stacking, accountability, and privacy by design
+- [`intellectus_compliance_memo.md`](./intellectus_compliance_memo.md) — client-facing GDPR recommendation memo with the bottom line, priority actions, and residual risks
 
 ## How to complete this lab
 
